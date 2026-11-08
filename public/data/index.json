@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "subjects": [
+    {
+      "id": "biology",
+      "name": "生物",
+      "desc": "高中生物必修一 · 细胞与分子",
+      "icon": "dna",
+      "accent": "#5DBFA0",
+      "file": "biology.json",
+      "questionCount": 8
+    },
+    {
+      "id": "chemistry",
+      "name": "化学",
+      "desc": "必修一 · 物质与离子反应",
+      "icon": "flask",
+      "accent": "#7B9AE0",
+      "file": "chemistry.json",
+      "questionCount": 8
+    },
+    {
+      "id": "history",
+      "name": "历史",
+      "desc": "中国古代史 · 先秦至秦汉",
+      "icon": "scroll",
+      "accent": "#E0A458",
+      "file": "history.json",
+      "questionCount": 8
+    }
+  ]
+}

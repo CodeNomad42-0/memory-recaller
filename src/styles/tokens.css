@@ -1,0 +1,26 @@
+:root {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --surface-soft: #f2f4f7;
+  --text: #1a1a1f;
+  --text-sub: #8b8b96;
+  --text-disabled: #c7c7cf;
+
+  --accent: #5dbfa0;
+  --accent-deep: #2f8f74;
+
+  --ok: #3fbf7f;
+  --ok-text: #2a8f5e;
+  --err: #e06a6a;
+  --err-text: #b84545;
+
+  --radius-card: 20px;
+  --radius-btn: 16px;
+  --radius-pill: 9999px;
+
+  --shadow-card: 0 2px 12px rgba(20, 20, 40, 0.05);
+  --shadow-float: 0 10px 28px rgba(20, 20, 40, 0.08);
+
+  --font: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Segoe UI', Roboto, sans-serif;
+}
