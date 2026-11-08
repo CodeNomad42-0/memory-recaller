@@ -4,11 +4,11 @@
     {
       "id": "biology",
       "name": "生物",
-      "desc": "高中生物必修一 · 细胞与分子",
+      "desc": "必修一 · 细胞的结构与物质运输",
       "icon": "dna",
       "accent": "#5DBFA0",
       "file": "biology.json",
-      "questionCount": 8
+      "questionCount": 57
     },
     {
       "id": "chemistry",
@@ -27,6 +27,15 @@
       "accent": "#E0A458",
       "file": "history.json",
       "questionCount": 8
+    },
+    {
+      "id": "politics",
+      "name": "政治",
+      "desc": "必修一、必修二 · 中国特色社会主义与经济与社会",
+      "icon": "scale",
+      "accent": "#C9707A",
+      "file": "politics.json",
+      "questionCount": 72
     }
   ]
 }
