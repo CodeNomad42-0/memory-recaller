@@ -16,11 +16,14 @@
 
 ```bash
 npm install
-npm run dev        # 本地开发
-npm run build      # 类型检查 + 构建到 dist/
-npm run preview    # 预览构建产物
-npm run lint:data  # 校验 public/data 下的题库 JSON
+npm run dev          # 本地开发
+npm run build        # 类型检查 + 构建到 dist/
+npm run build:single # 打包成单个自包含 HTML（dist-single/index.html）
+npm run preview      # 预览构建产物
+npm run lint:data    # 校验 public/data 下的题库 JSON
 ```
+
+单文件产物把 JS、CSS 与全部题库内联进一个 `index.html`，可离线双击打开，不需要本地服务器。
 
 ## 部署到 GitHub Pages
 

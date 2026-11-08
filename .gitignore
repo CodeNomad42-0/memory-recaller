@@ -4,6 +4,7 @@ node_modules/
 # 构建产物（编译前源码保留，产物不入库）
 dist/
 dist-ssr/
+dist-single/
 *.local
 
 # 缓存与日志

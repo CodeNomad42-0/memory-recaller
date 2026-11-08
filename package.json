@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
+    "build:single": "vue-tsc --noEmit && vite build --config vite.config.single.ts",
     "build:only": "vite build",
     "preview": "vite preview",
     "lint:data": "node scripts/lint-data.mjs"
@@ -19,6 +20,7 @@
     "@vitejs/plugin-vue": "^5.2.1",
     "typescript": "^5.6.3",
     "vite": "^5.4.11",
+    "vite-plugin-singlefile": "^2.3.4",
     "vue-tsc": "^2.1.10"
   }
 }

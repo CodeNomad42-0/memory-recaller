@@ -9,6 +9,10 @@ function dataUrl(fileName: string): string {
 }
 
 async function fetchJson<T>(fileName: string): Promise<T> {
+  // 单文件构建会把题库内联到 HTML 的 window.__RECALLER_DATA__ 中，此时无需网络请求。
+  const injected = (globalThis as { __RECALLER_DATA__?: Record<string, unknown> }).__RECALLER_DATA__?.[fileName]
+  if (injected) return injected as T
+
   const response = await fetch(dataUrl(fileName))
   if (!response.ok) {
     throw new Error(`加载 ${fileName} 失败（HTTP ${response.status}）`)
