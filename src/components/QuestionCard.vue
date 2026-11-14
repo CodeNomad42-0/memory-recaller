@@ -104,8 +104,9 @@ function stateOf(index: number): 'idle' | 'correct' | 'wrong' {
 
 <style scoped>
 .question-card {
-  padding: 34px 30px;
+  padding: 32px 30px;
   min-height: 240px;
+  border-radius: var(--radius-lg);
 }
 
 .stem {
@@ -116,9 +117,9 @@ function stateOf(index: number): 'idle' | 'correct' | 'wrong' {
 }
 
 .feedback {
-  margin-top: 26px;
+  margin-top: 24px;
   padding: 16px 18px;
-  border-radius: 14px;
+  border-radius: var(--radius-btn);
   background: #fdf0f0;
 }
 

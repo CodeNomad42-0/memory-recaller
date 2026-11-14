@@ -24,6 +24,16 @@ const router = createRouter({
       component: () => import('../pages/WrongBookPage.vue')
     },
     {
+      path: '/stats',
+      name: 'stats',
+      component: () => import('../pages/StatsPage.vue')
+    },
+    {
+      path: '/studio',
+      name: 'studio',
+      component: () => import('../pages/StudioPage.vue')
+    },
+    {
       path: '/settings',
       name: 'settings',
       component: () => import('../pages/SettingsPage.vue')

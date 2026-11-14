@@ -1,3 +1,9 @@
+import {
+  CUSTOM_FILE_PREFIX,
+  customSubjectMeta,
+  listCustomBanks,
+  loadCustomBank
+} from './customBank'
 import type { QuestionBank, SubjectIndex } from './types'
 
 const DATA_VERSION = '1'
@@ -24,14 +30,33 @@ export async function loadSubjectIndex(): Promise<SubjectIndex> {
   const cached = indexCache.get('index')
   if (cached) return cached
   const index = await fetchJson<SubjectIndex>('index.json')
-  indexCache.set('index', index)
-  return index
+  const merged: SubjectIndex = {
+    schemaVersion: index.schemaVersion,
+    subjects: [...index.subjects, ...listCustomBanks().map(customSubjectMeta)]
+  }
+  indexCache.set('index', merged)
+  return merged
 }
 
 export async function loadSubjectBank(fileName: string): Promise<QuestionBank> {
+  if (fileName.startsWith(CUSTOM_FILE_PREFIX)) {
+    const id = fileName.slice(CUSTOM_FILE_PREFIX.length)
+    const bank = loadCustomBank(id)
+    if (!bank) {
+      throw new Error('自建题库不存在，可能已被删除')
+    }
+    return bank
+  }
+
   const cached = bankCache.get(fileName)
   if (cached) return cached
   const bank = await fetchJson<QuestionBank>(fileName)
   bankCache.set(fileName, bank)
   return bank
+}
+
+/** 自建题库变更后清空缓存，让首页与练习页重新读取。 */
+export function invalidateDataCache(): void {
+  indexCache.clear()
+  bankCache.clear()
 }

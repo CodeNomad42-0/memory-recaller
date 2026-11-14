@@ -2,12 +2,15 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import AppIcon from '../components/AppIcon.vue'
+import AchievementPanel from '../components/AchievementPanel.vue'
 import { useSessionStore } from '../stores/session'
 
 const router = useRouter()
 const session = useSessionStore()
 
 const result = computed(() => session.result)
+
+const showAchievement = computed(() => (result.value?.total ?? 0) >= 20)
 
 const accuracyText = computed(() =>
   result.value ? `${Math.round(result.value.accuracy * 100)}%` : '0%'
@@ -44,6 +47,13 @@ function practiceWrong(): void {
           <p class="subtitle">{{ result.subjectName }} · 共 {{ result.total }} 道题</p>
         </div>
       </header>
+
+      <AchievementPanel
+        v-if="showAchievement"
+        :total="result.total"
+        :accuracy="result.accuracy"
+        :duration-ms="result.durationMs"
+      />
 
       <section class="card score-card">
         <div class="score-main">

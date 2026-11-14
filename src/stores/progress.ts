@@ -2,6 +2,7 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { blankMastery, reviewBlank } from '../core/scheduler'
 import { isDue, isWeakQuestion, updateWeight } from '../core/queue'
+import { recordOutcomeStats } from '../core/stats'
 import {
   clearProgressStorage,
   createEmptyProgress,
@@ -66,6 +67,13 @@ export const useProgressStore = defineStore('progress', () => {
     const allCorrect = outcomes.length > 0 && outcomes.every((outcome) => outcome.correct)
     const daysSinceLastReview = previous ? Math.max(0, (now - previous.lastSeenAt) / DAY_MS) : 0
     const wasWeak = previous ? isWeakQuestion(previous) : false
+
+    // 统计需在覆盖记录前完成：用上一次的 blank 记录判断是否为首次作答
+    outcomes.forEach((outcome, index) => {
+      const prev = previousBlanks[index]
+      const firstAttempt = !prev || prev.right + prev.wrong === 0
+      recordOutcomeStats(state.value, { firstAttempt, correct: outcome.correct }, now)
+    })
 
     bucket[question.id] = {
       lastSeenAt: now,

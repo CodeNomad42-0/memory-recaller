@@ -42,12 +42,18 @@ const props = defineProps<{
   flex-direction: column;
   gap: 16px;
   min-height: 172px;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  padding: 20px 22px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .subject-card:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-float);
+  box-shadow: var(--shadow-lift);
+}
+
+.subject-card:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift), var(--focus-ring);
 }
 
 .subject-top {

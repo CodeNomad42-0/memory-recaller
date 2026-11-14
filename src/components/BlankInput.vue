@@ -86,7 +86,12 @@ function onKeydown(event: KeyboardEvent): void {
   border-radius: var(--radius-pill);
   background: #f4f6f8;
   vertical-align: baseline;
-  transition: background 0.18s ease;
+  transition: background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.input-wrap:focus-within {
+  background: var(--surface);
+  box-shadow: var(--focus-ring);
 }
 
 .blank-input {
@@ -99,6 +104,10 @@ function onKeydown(event: KeyboardEvent): void {
   font-size: 0.94em;
   font-weight: 600;
   color: var(--text);
+}
+
+.blank-input:focus-visible {
+  box-shadow: none;
 }
 
 .blank-input::placeholder {

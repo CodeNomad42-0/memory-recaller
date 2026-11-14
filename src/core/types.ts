@@ -71,11 +71,21 @@ export interface SubjectProgress {
   questions: Record<string, QuestionRecord>
 }
 
+export interface DailyStat {
+  attempts: number       // 当日作答的空次数
+  correct: number        // 当日答对的空次数
+  firstAttempts: number  // 当日内首次作答（历史第一次接触）的空次数
+  firstCorrect: number   // 其中首次即答对的空次数
+  reviews: number        // 有效复习次数：该空此前已有作答记录
+  forgotten: number      // 复习中本次答错/未记住的次数
+}
+
 export interface ProgressState {
   schemaVersion: number
   updatedAt: number
   settings: UserSettings
   subjects: Record<string, SubjectProgress>
+  daily: Record<string, DailyStat>
 }
 
 export interface SegmentText {

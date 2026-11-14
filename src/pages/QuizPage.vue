@@ -306,22 +306,25 @@ onMounted(async () => {
         <span class="bar-fill" :style="{ width: `${((index + 1) / queue.length) * 100}%` }"></span>
       </div>
 
-      <QuestionCard
-        :segments="segments"
-        :mode="mode"
-        :phase="state.phase"
-        :inputs="state.inputs"
-        :revealed="state.revealed"
-        :self-eval="state.selfEval"
-        :outcomes="state.outcomes"
-        :show-hint="showHint"
-        :focus-index="focusIndex"
-        :explain="current?.explain"
-        @reveal="reveal"
-        @mark-wrong="toggleWrong"
-        @update:input="updateInput"
-        @enter="handleEnter"
-      />
+      <Transition name="quiz-swap" mode="out-in">
+        <QuestionCard
+          :key="current?.id"
+          :segments="segments"
+          :mode="mode"
+          :phase="state.phase"
+          :inputs="state.inputs"
+          :revealed="state.revealed"
+          :self-eval="state.selfEval"
+          :outcomes="state.outcomes"
+          :show-hint="showHint"
+          :focus-index="focusIndex"
+          :explain="current?.explain"
+          @reveal="reveal"
+          @mark-wrong="toggleWrong"
+          @update:input="updateInput"
+          @enter="handleEnter"
+        />
+      </Transition>
 
       <p v-if="mode === 'reveal' && state.phase === 'answering'" class="tip tip-ok">
         点击遮罩揭示答案；只有没记住的空才点「没记住」，其余默认算记住。
@@ -384,11 +387,17 @@ onMounted(async () => {
 }
 
 .bar {
-  height: 6px;
+  height: 8px;
   border-radius: var(--radius-pill);
   background: var(--surface-soft);
   overflow: hidden;
   margin-bottom: 20px;
+}
+
+@supports (background: color-mix(in srgb, red 10%, white)) {
+  .bar {
+    background: color-mix(in srgb, var(--accent) 10%, var(--surface-soft));
+  }
 }
 
 .bar-fill {
@@ -396,7 +405,27 @@ onMounted(async () => {
   height: 100%;
   border-radius: var(--radius-pill);
   background: var(--accent);
-  transition: width 0.25s ease;
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 45%, #ffffff),
+    var(--accent)
+  );
+  transition: width 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.quiz-swap-enter-active,
+.quiz-swap-leave-active {
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.quiz-swap-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.quiz-swap-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
 }
 
 .tip {
@@ -423,12 +452,39 @@ onMounted(async () => {
 }
 
 @media (max-width: 520px) {
+  .quiz-head {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .head-left {
+    gap: 10px;
+  }
+  .quiz-subject {
+    font-size: 16px;
+  }
+  .quiz-progress {
+    font-size: 12.5px;
+  }
+  .segmented button {
+    height: 32px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+  .bar {
+    height: 7px;
+    margin-bottom: 16px;
+  }
   .quiz-foot {
     flex-direction: column-reverse;
     align-items: stretch;
+    gap: 10px;
+    margin-top: 20px;
   }
   .foot-left {
     justify-content: space-between;
+  }
+  .quiz-foot .btn-lg {
+    width: 100%;
   }
 }
 </style>

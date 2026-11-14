@@ -90,6 +90,21 @@ ul {
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   padding: 22px;
+  transition: box-shadow 0.22s ease, transform 0.22s ease, background 0.22s ease;
+}
+
+.shortcut {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shortcut:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+}
+
+.shortcut:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift), var(--focus-ring);
 }
 
 .btn {
@@ -128,6 +143,11 @@ ul {
 .btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn:disabled:active {
+  transform: none;
 }
 
 .btn-ghost {
@@ -214,6 +234,18 @@ ul {
   font-weight: 600;
 }
 
+.btn:focus-visible,
+.icon-btn:focus-visible,
+.segmented button:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
 .empty {
   padding: 56px 24px;
   text-align: center;
@@ -267,5 +299,29 @@ ul {
   }
   .title {
     font-size: 24px;
+  }
+  .subtitle {
+    font-size: 13.5px;
+  }
+  .grid-cards {
+    gap: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .card,
+  .btn,
+  .icon-btn,
+  .shortcut {
+    transition: none !important;
   }
 }

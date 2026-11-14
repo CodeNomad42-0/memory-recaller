@@ -48,13 +48,13 @@ onMounted(async () => {
 
 <template>
   <main class="page">
-    <header class="page-head">
-      <div>
+    <header class="page-head home-head">
+      <div class="head-copy">
         <h1 class="title">Recaller</h1>
         <p class="subtitle">挑一个科目，一句话一个知识点，点开就开始。</p>
       </div>
       <div class="head-actions">
-        <span class="chip">
+        <span class="chip chip-today">
           <AppIcon name="target" :size="15" />
           今日待复习 {{ totalDue }}
         </span>
@@ -95,6 +95,20 @@ onMounted(async () => {
             <p class="shortcut-desc">集中重练所有薄弱题</p>
           </div>
         </RouterLink>
+        <RouterLink class="shortcut card" :to="{ name: 'stats' }">
+          <AppIcon name="trend" :size="20" />
+          <div>
+            <p class="shortcut-title">学习统计</p>
+            <p class="shortcut-desc">首次记忆成功率与遗忘率</p>
+          </div>
+        </RouterLink>
+        <RouterLink class="shortcut card" :to="{ name: 'studio' }">
+          <AppIcon name="file-text" :size="20" />
+          <div>
+            <p class="shortcut-title">题库工坊</p>
+            <p class="shortcut-desc">导出 Word 或自建题库</p>
+          </div>
+        </RouterLink>
         <RouterLink class="shortcut card" :to="{ name: 'settings' }">
           <AppIcon name="settings" :size="20" />
           <div>
@@ -115,7 +129,31 @@ onMounted(async () => {
 .head-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.home-head {
+  align-items: flex-end;
+  margin-bottom: 26px;
+  row-gap: 14px;
+}
+
+.head-copy {
+  min-width: 0;
+}
+
+.head-copy .subtitle {
+  margin-top: 8px;
+  max-width: 36ch;
+}
+
+.chip-today {
+  height: 30px;
+  padding: 0 13px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-weight: 600;
 }
 
 .skeleton-grid {
@@ -144,8 +182,8 @@ onMounted(async () => {
 .shortcuts {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
-  margin-top: 20px;
+  gap: 14px;
+  margin-top: 26px;
 }
 
 .shortcut {
@@ -154,29 +192,39 @@ onMounted(async () => {
   gap: 14px;
   padding: 18px 20px;
   color: var(--text-sub);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
-
-.shortcut:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-float);
 }
 
 .shortcut-title {
   font-size: 15px;
   font-weight: 600;
+  line-height: 1.35;
   color: var(--text);
 }
 
 .shortcut-desc {
   font-size: 12.5px;
+  line-height: 1.45;
   color: var(--text-sub);
 }
 
 .foot-note {
-  margin-top: 28px;
+  margin-top: 26px;
   text-align: center;
   font-size: 12.5px;
   color: var(--text-disabled);
+}
+
+@media (max-width: 480px) {
+  .home-head {
+    margin-bottom: 20px;
+  }
+  .head-copy .subtitle {
+    margin-top: 6px;
+  }
+  .chip-today {
+    height: 28px;
+    padding: 0 11px;
+    font-size: 12.5px;
+  }
 }
 </style>

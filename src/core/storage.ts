@@ -1,7 +1,7 @@
-import type { ProgressState, UserSettings } from './types'
+import type { DailyStat, ProgressState, UserSettings } from './types'
 
 export const STORAGE_KEY = 'recaller:progress:v1'
-export const SCHEMA_VERSION = 1
+export const SCHEMA_VERSION = 2
 
 export function defaultSettings(): UserSettings {
   return {
@@ -16,8 +16,33 @@ export function createEmptyProgress(): ProgressState {
     schemaVersion: SCHEMA_VERSION,
     updatedAt: Date.now(),
     settings: defaultSettings(),
-    subjects: {}
+    subjects: {},
+    daily: {}
   }
+}
+
+/** 数字兜底：非数字或负数按 0 处理 */
+function toCount(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : 0
+}
+
+/** 补齐每日统计，旧存档没有 daily 时按空对象处理 */
+function normalizeDaily(raw: unknown): Record<string, DailyStat> {
+  const daily: Record<string, DailyStat> = {}
+  if (!raw || typeof raw !== 'object') return daily
+  for (const [dateKey, entry] of Object.entries(raw as Record<string, unknown>)) {
+    if (!entry || typeof entry !== 'object') continue
+    const item = entry as Partial<DailyStat>
+    daily[dateKey] = {
+      attempts: toCount(item.attempts),
+      correct: toCount(item.correct),
+      firstAttempts: toCount(item.firstAttempts),
+      firstCorrect: toCount(item.firstCorrect),
+      reviews: toCount(item.reviews),
+      forgotten: toCount(item.forgotten)
+    }
+  }
+  return daily
 }
 
 function normalizeProgress(raw: unknown): ProgressState {
@@ -34,7 +59,8 @@ function normalizeProgress(raw: unknown): ProgressState {
     schemaVersion: SCHEMA_VERSION,
     updatedAt: typeof candidate.updatedAt === 'number' ? candidate.updatedAt : Date.now(),
     settings,
-    subjects
+    subjects,
+    daily: normalizeDaily(candidate.daily)
   }
 }
 
